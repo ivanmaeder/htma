@@ -1,30 +1,42 @@
-#RULE OF 5
-#Range from a sample of 5 will contain the mean with 93.75% probability.
+isMedianWithinSampleRange = function(median, sample) {
+  range = range(sample)
 
-MAX_VALUE = 10000
-
-NUMBER_OF_RUNS = 1000
-NUMBER_OF_SAMPLES_TAKEN_PER_RUN = 100
-
-POPULATION_SIZE = 500
-
-#Uniform distribution
-v = c()
-
-for (i in 1:NUMBER_OF_RUNS) {
-  s = sample(1:POPULATION_SIZE, MAX_VALUE, replace=T)
-  m = median(s)
+  if (range[1] <= median & range[2] >= median) {
+    return(T)
+  }
   
-  hits = 0
+  return(F)
+}
 
-  for (j in 1:NUMBER_OF_SAMPLES_TAKEN_PER_RUN) {
-    r = range(sample(s, 5))
-    if (r[1] <= m & r[2] >= m) {
+createNewPopulation = function() {
+  # sample(x=10000, size=500, replace=T)
+  rnorm(10000, mean=5000, sd=1)
+}
+
+checkRandomSamples = function(population) {
+  hits = 0
+  
+  for (i in 1:100) {
+    newSample = sample(population, 5)
+    isMedianWithinSampleRange(median, newSample)
+
+    if (runExperiment(population)) {
       hits = hits + 1
     }
   }
-
-  v[i] = hits
+  
+  return(hits)
 }
 
-mean(v)
+#
+
+hitsPerRun = c()
+
+for (i in 1:100) {
+  population = createNewPopulation()
+  median = median(population)
+  
+  hitsPerRun[i] = checkRandomSamples(population)
+}
+
+mean(hitsPerRun)
