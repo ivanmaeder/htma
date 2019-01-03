@@ -1,3 +1,7 @@
+#RULE OF FIVE
+#The population median will fall inside the range of a sample of 5
+#with 93.75% accuracy (no matter the population size).
+
 isMedianWithinSampleRange = function(median, sample) {
   range = range(sample)
 
@@ -7,6 +11,8 @@ isMedianWithinSampleRange = function(median, sample) {
   
   return(F)
 }
+
+#Works with a normally distributed or uniform sample.
 
 createNewPopulation = function() {
   # sample(x=10000, size=500, replace=T)
