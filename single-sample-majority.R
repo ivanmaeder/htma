@@ -3,6 +3,8 @@
 #choose 1 sample, 75% of the time the characteristic found in the sample
 #will apply to the majority.
 
+#All values must be equally likely (uniform distribution).
+
 #To try to simulate a characteristic that can apply to 0-100% of the
 #population, choose a number between 0 and 100.
 
